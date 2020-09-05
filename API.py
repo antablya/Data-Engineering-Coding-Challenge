@@ -9,11 +9,13 @@ client = pymongo.MongoClient("mongodb+srv://dbUser1:1234@cluster0.hfrlh.mongodb.
 db=client["testdb"]
 collection=db["testcollection"]
 
-
+#Search articles by Keywords.
 @app.route('/articles',methods=["GET"])
 def get_articles():
     final_results=[]
-    results = collection.find({})
+    results = collection.find({"keywords": {"$all": ["coronavirus"]}})
+
+
     for result in results:
         result["_id"]=str(result["_id"])
         final_results.append(result)
